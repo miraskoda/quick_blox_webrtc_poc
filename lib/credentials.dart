@@ -7,11 +7,11 @@ const String CHAT_ENDPOINT = "";
 
 const String JANUS_SERVER_URL = "";
 
-String USER_LOGIN = "test1";
+String USER_LOGIN = "test9";
 String USER_PASSWORD = "12345678";
 
-int LOGGED_USER_ID = 135863256;
-int OPPONENT_ID = 135863258;
+int LOGGED_USER_ID = 135870266;
+int OPPONENT_ID = 135870267;
 
 List<int> OPPONENTS_IDS = [OPPONENT_ID];
 const String DIALOG_ID = "";

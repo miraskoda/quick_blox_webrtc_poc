@@ -1,18 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:quickblox_sdk_example/credentials.dart';
-import 'package:quickblox_sdk_example/screens/auth_screen.dart';
-import 'package:quickblox_sdk_example/screens/chat_screen.dart';
-import 'package:quickblox_sdk_example/screens/conference_screen.dart';
-import 'package:quickblox_sdk_example/screens/content_screen.dart';
-import 'package:quickblox_sdk_example/screens/custom_objects_screen.dart';
-import 'package:quickblox_sdk_example/screens/events_screen.dart';
-import 'package:quickblox_sdk_example/screens/settings_screen.dart';
-import 'package:quickblox_sdk_example/screens/subscriptions_screen.dart';
-import 'package:quickblox_sdk_example/screens/users_screen.dart';
 import 'package:quickblox_sdk_example/screens/webrtc_screen.dart';
+import 'package:wakelock/wakelock.dart';
 
-void main() => runApp(App());
+void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  Wakelock.enable();
+  return runApp(App());
+}
 
 class App extends StatelessWidget {
   @override
@@ -64,11 +60,11 @@ class _LoginState extends State<Login> {
     await Permission.microphone.request();
   }
 
-  final String firstLogin = "test1";
-  final String secondLogin = "test2";
+  final String firstLogin = "test9";
+  final String secondLogin = "test11";
 
-  final int firstId = 135863256;
-  final int secondId = 135863258;
+  final int firstId = 135870266;
+  final int secondId = 135870267;
 
   int _currentId = LOGGED_USER_ID;
   String _currentLogin = USER_LOGIN;

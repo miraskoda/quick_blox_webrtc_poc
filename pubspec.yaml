@@ -8,6 +8,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  wakelock: 0.6.2 
   quickblox_sdk: 0.7.1
   permission_handler: 10.0.2
 
