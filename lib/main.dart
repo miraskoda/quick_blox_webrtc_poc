@@ -26,19 +26,25 @@ class MainScreen extends StatelessWidget {
           centerTitle: true,
         ),
         body: Center(
-          child: Column(children: [
-            MaterialButton(
-                minWidth: 200,
-                child: Text('WebRTC'),
-                color: Theme.of(context).primaryColor,
-                textColor: Colors.white,
-                onPressed: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (BuildContext context) => WebRTCScreen(),
-                    ))),
-            Login()
-          ]),
+          child: Padding(
+            padding: const EdgeInsets.only(top: 30),
+            child: Column(children: [
+              MaterialButton(
+                  minWidth: 200,
+                  child: Text('WebRTC'),
+                  color: Theme.of(context).primaryColor,
+                  textColor: Colors.white,
+                  onPressed: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (BuildContext context) => WebRTCScreen(),
+                      ))),
+              Padding(
+                padding: const EdgeInsets.only(top: 20),
+                child: Login(),
+              )
+            ]),
+          ),
         ));
   }
 }
@@ -60,40 +66,91 @@ class _LoginState extends State<Login> {
     await Permission.microphone.request();
   }
 
-  final String firstLogin = "test9";
-  final String secondLogin = "test11";
-
-  final int firstId = 135870266;
-  final int secondId = 135870267;
-
-  int _currentId = LOGGED_USER_ID;
-  String _currentLogin = USER_LOGIN;
-
   @override
   Widget build(BuildContext context) {
-    return TextButton(
-      onPressed: () {
-        if (_currentId == firstId) {
-          _currentId = secondId;
-          _currentLogin = secondLogin;
-          USER_LOGIN = secondLogin;
-          LOGGED_USER_ID = secondId;
-          OPPONENT_ID = firstId;
-          OPPONENTS_IDS = [firstId];
-        } else {
-          _currentId = firstId;
-          _currentLogin = firstLogin;
-          USER_LOGIN = firstLogin;
-          LOGGED_USER_ID = firstId;
-          OPPONENT_ID = secondId;
-          OPPONENTS_IDS = [secondId];
-        }
-        setState(() {});
-      },
-      child: Padding(
-          padding: EdgeInsets.fromLTRB(0, 30, 0, 0),
-          child: Text("USER LOGIN: ${_currentLogin} \n USER ID: ${_currentId}",
-              style: TextStyle(fontSize: 14))),
+    return Row(
+      children: [
+        Expanded(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text("prihlaseny uzivatel"),
+              Padding(
+                padding: const EdgeInsets.only(top: 15),
+                child: ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: users.length,
+                    itemBuilder: (BuildContext context, int i) {
+                      MapEntry<int, String> item = users[i];
+                      return CheckboxListTile(
+                        title: Text(item.value),
+                        value: LOGGED_USER_ID == item.key,
+                        onChanged: (bool? value) {
+                          if (item.key != OPPONENT_ID)
+                            setState(() {
+                              LOGGED_USER_ID = item.key;
+                              LOGGED_USER_LOGIN = item.value;
+                            });
+                        },
+                      );
+                    }),
+              ),
+            ],
+          ),
+        ),
+        Expanded(
+          child: Column(
+            children: [
+              Text("Komu volat?"),
+              Padding(
+                padding: const EdgeInsets.only(top: 15),
+                child: ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: users.length,
+                    itemBuilder: (BuildContext context, int i) {
+                      MapEntry<int, String> item = users[i];
+                      return CheckboxListTile(
+                        title: Text(item.value),
+                        value: OPPONENT_ID == item.key,
+                        onChanged: (bool? value) {
+                          if (item.key != LOGGED_USER_ID)
+                            setState(() {
+                              OPPONENT_ID = item.key;
+                              OPPONENT_LOGIN = item.value;
+                            });
+                        },
+                      );
+                    }),
+              )
+            ],
+          ),
+        )
+      ],
     );
+
+    // TextButton(
+    //   onPressed: () {
+    //     if (_currentId == firstId) {
+    //       _currentId = secondId;
+    //       _currentLogin = secondLogin;
+    //       USER_LOGIN = secondLogin;
+    //       LOGGED_USER_ID = secondId;
+    //       OPPONENT_ID = firstId;
+    //       OPPONENTS_IDS = [firstId];
+    //     } else {
+    //       _currentId = firstId;
+    //       _currentLogin = firstLogin;
+    //       USER_LOGIN = firstLogin;
+    //       LOGGED_USER_ID = firstId;
+    //       OPPONENT_ID = secondId;
+    //       OPPONENTS_IDS = [secondId];
+    //     }
+    //     setState(() {});
+    //   },
+    //   child: Padding(
+    //       padding: EdgeInsets.fromLTRB(0, 30, 0, 0),
+    //       child: Text("USER LOGIN: ${_currentLogin} \n USER ID: ${_currentId}",
+    //           style: TextStyle(fontSize: 14))),
+    // );
   }
 }

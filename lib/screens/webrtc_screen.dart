@@ -52,7 +52,8 @@ class _WebRTCScreenState extends State<WebRTCScreen> {
 
   Future<void> login() async {
     try {
-      QBLoginResult result = await QB.auth.login(USER_LOGIN, USER_PASSWORD);
+      QBLoginResult result =
+          await QB.auth.login(LOGGED_USER_LOGIN, GLOBAL_USER_PASSWORD);
 
       QBUser? qbUser = result.qbUser;
       QBSession? qbSession = result.qbSession;
@@ -70,7 +71,7 @@ class _WebRTCScreenState extends State<WebRTCScreen> {
 
   Future<void> connectChat() async {
     try {
-      await QB.chat.connect(LOGGED_USER_ID, USER_PASSWORD);
+      await QB.chat.connect(LOGGED_USER_ID, GLOBAL_USER_PASSWORD);
       SnackBarUtils.showResult(_scaffoldKey, "The chat was connected");
     } on PlatformException catch (e) {
       DialogUtils.showError(context, e);
@@ -380,7 +381,7 @@ class _WebRTCScreenState extends State<WebRTCScreen> {
 
   Future<void> callWebRTC(int sessionType) async {
     try {
-      QBRTCSession? session = await QB.webrtc.call(OPPONENTS_IDS, sessionType);
+      QBRTCSession? session = await QB.webrtc.call([OPPONENT_ID], sessionType);
       _sessionId = session!.id;
       SnackBarUtils.showResult(
           _scaffoldKey, "The call was initiated for session id: $_sessionId");
