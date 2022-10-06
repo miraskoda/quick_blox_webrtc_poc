@@ -127,30 +127,5 @@ class _LoginState extends State<Login> {
         )
       ],
     );
-
-    // TextButton(
-    //   onPressed: () {
-    //     if (_currentId == firstId) {
-    //       _currentId = secondId;
-    //       _currentLogin = secondLogin;
-    //       USER_LOGIN = secondLogin;
-    //       LOGGED_USER_ID = secondId;
-    //       OPPONENT_ID = firstId;
-    //       OPPONENTS_IDS = [firstId];
-    //     } else {
-    //       _currentId = firstId;
-    //       _currentLogin = firstLogin;
-    //       USER_LOGIN = firstLogin;
-    //       LOGGED_USER_ID = firstId;
-    //       OPPONENT_ID = secondId;
-    //       OPPONENTS_IDS = [secondId];
-    //     }
-    //     setState(() {});
-    //   },
-    //   child: Padding(
-    //       padding: EdgeInsets.fromLTRB(0, 30, 0, 0),
-    //       child: Text("USER LOGIN: ${_currentLogin} \n USER ID: ${_currentId}",
-    //           style: TextStyle(fontSize: 14))),
-    // );
   }
 }

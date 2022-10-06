@@ -385,7 +385,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Flutter",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.mcc.flutter;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mcc.bloxpoc;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTS_MACCATALYST = YES;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -518,7 +518,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Flutter",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.mcc.flutter;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mcc.bloxpoc;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTS_MACCATALYST = YES;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -545,7 +545,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Flutter",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.mcc.flutter;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mcc.bloxpoc;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTS_MACCATALYST = YES;
 				VERSIONING_SYSTEM = "apple-generic";

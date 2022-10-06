@@ -99,159 +99,185 @@ class _WebRTCScreenState extends State<WebRTCScreen> {
         appBar: AppBar(
           title: const Text('WebRTC'),
           centerTitle: true,
-          leading: IconButton(
-              icon: Icon(Icons.arrow_back),
-              onPressed: () => Navigator.of(context).pop()),
-        ),
-        body: Center(
-            child: SingleChildScrollView(
-                child: Column(children: [
-          MaterialButton(
-            minWidth: 200,
-            child: Text('init'),
-            color: Theme.of(context).primaryColor,
-            textColor: Colors.white,
-            onPressed: init,
-          ),
-          MaterialButton(
-            minWidth: 200,
-            child: Text('call Video'),
-            color: Theme.of(context).primaryColor,
-            textColor: Colors.white,
-            onPressed: () {
-              callWebRTC(QBRTCSessionTypes.VIDEO);
-              setState(() {
-                _videoCall = true;
-              });
-            },
-          ),
-          MaterialButton(
-            minWidth: 200,
-            child: Text('call Audio'),
-            color: Theme.of(context).primaryColor,
-            textColor: Colors.white,
-            onPressed: () {
-              callWebRTC(QBRTCSessionTypes.AUDIO);
-              setState(() {
-                _videoCall = false;
-              });
-            },
-          ),
-          MaterialButton(
-            minWidth: 200,
-            child: Text('hangUp'),
-            color: Theme.of(context).primaryColor,
-            textColor: Colors.white,
-            onPressed: hangUpWebRTC,
-          ),
-          MaterialButton(
-              minWidth: 200,
-              child: Text('disable video'),
-              color: Theme.of(context).primaryColor,
-              textColor: Colors.white,
-              onPressed: () {
-                enableVideo(false);
-              }),
-          MaterialButton(
-              minWidth: 200,
-              child: Text('enable video'),
-              color: Theme.of(context).primaryColor,
-              textColor: Colors.white,
-              onPressed: () {
-                enableVideo(true);
-              }),
-          MaterialButton(
-              minWidth: 200,
-              child: Text('disable audio'),
-              color: Theme.of(context).primaryColor,
-              textColor: Colors.white,
-              onPressed: () {
-                enableAudio(false);
-              }),
-          MaterialButton(
-              minWidth: 200,
-              child: Text('enable audio'),
-              color: Theme.of(context).primaryColor,
-              textColor: Colors.white,
-              onPressed: () {
-                enableAudio(true);
-              }),
-          MaterialButton(
-            minWidth: 200,
-            child: Text('switch camera'),
-            color: Theme.of(context).primaryColor,
-            textColor: Colors.white,
-            onPressed: switchCamera,
-          ),
-          MaterialButton(
-            minWidth: 200,
-            child: Text('Mirror camera'),
-            color: Theme.of(context).primaryColor,
-            textColor: Colors.white,
-            onPressed: mirrorCamera,
-          ),
-          Visibility(
-            visible: !_videoCall,
-            child: MaterialButton(
-              minWidth: 200,
-              child: Text('Switch audio to LOUDSPEAKER'),
-              color: Theme.of(context).primaryColor,
-              textColor: Colors.white,
-              onPressed: () {
-                switchAudioOutput(QBRTCAudioOutputTypes.LOUDSPEAKER);
-              },
-            ),
-          ),
-          Visibility(
-            visible: !_videoCall,
-            child: MaterialButton(
-              minWidth: 200,
-              child: Text('Switch audio to EARSPEAKER'),
-              color: Theme.of(context).primaryColor,
-              textColor: Colors.white,
-              onPressed: () {
-                switchAudioOutput(QBRTCAudioOutputTypes.EARSPEAKER);
-              },
-            ),
-          ),
-          Container(
-            margin: EdgeInsets.only(
-                left: 20.0, right: 20.0, top: 20.0, bottom: 20.0),
-            height: 1,
-            width: double.maxFinite,
-            color: Colors.grey,
-          ),
-          Visibility(
-            visible: _videoCall,
-            child: OrientationBuilder(builder: (context, orientation) {
-              return Container(
-                decoration: BoxDecoration(color: Colors.white),
+          leading: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10),
+            child: TextButton(
                 child: Row(
-                  children: <Widget>[
-                    Container(
-                      margin: EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 10.0),
-                      width: 160.0,
-                      height: 160.0,
-                      child: RTCVideoView(
-                        onVideoViewCreated: _onLocalVideoViewCreated,
-                      ),
-                      decoration: BoxDecoration(color: Colors.black54),
+                  children: [
+                    Text(
+                      "logout",
+                      style: TextStyle(color: Colors.white),
                     ),
-                    Container(
-                      margin: EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 10.0),
-                      width: 160.0,
-                      height: 160.0,
-                      child: RTCVideoView(
-                        onVideoViewCreated: _onRemoteVideoViewCreated,
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 3),
+                      child: Icon(
+                        Icons.logout,
+                        color: Colors.white,
                       ),
-                      decoration: BoxDecoration(color: Colors.black54),
                     ),
                   ],
                 ),
-              );
-            }),
+                onPressed: () async {
+                  await QB.auth.logout();
+                  SnackBarUtils.showResult(
+                      _scaffoldKey, "User successfully logged out.");
+
+                  Navigator.of(context).pop();
+                }),
           ),
-        ]))));
+        ),
+        body: WillPopScope(
+          onWillPop: () => Future.value(false),
+          child: Center(
+              child: SingleChildScrollView(
+                  child: Column(children: [
+            MaterialButton(
+              minWidth: 200,
+              child: Text('init'),
+              color: Theme.of(context).primaryColor,
+              textColor: Colors.white,
+              onPressed: init,
+            ),
+            MaterialButton(
+              minWidth: 200,
+              child: Text('call Video'),
+              color: Theme.of(context).primaryColor,
+              textColor: Colors.white,
+              onPressed: () {
+                callWebRTC(QBRTCSessionTypes.VIDEO);
+                setState(() {
+                  _videoCall = true;
+                });
+              },
+            ),
+            MaterialButton(
+              minWidth: 200,
+              child: Text('call Audio'),
+              color: Theme.of(context).primaryColor,
+              textColor: Colors.white,
+              onPressed: () {
+                callWebRTC(QBRTCSessionTypes.AUDIO);
+                setState(() {
+                  _videoCall = false;
+                });
+              },
+            ),
+            MaterialButton(
+              minWidth: 200,
+              child: Text('hangUp'),
+              color: Theme.of(context).primaryColor,
+              textColor: Colors.white,
+              onPressed: hangUpWebRTC,
+            ),
+            MaterialButton(
+                minWidth: 200,
+                child: Text('disable video'),
+                color: Theme.of(context).primaryColor,
+                textColor: Colors.white,
+                onPressed: () {
+                  enableVideo(false);
+                }),
+            MaterialButton(
+                minWidth: 200,
+                child: Text('enable video'),
+                color: Theme.of(context).primaryColor,
+                textColor: Colors.white,
+                onPressed: () {
+                  enableVideo(true);
+                }),
+            MaterialButton(
+                minWidth: 200,
+                child: Text('disable audio'),
+                color: Theme.of(context).primaryColor,
+                textColor: Colors.white,
+                onPressed: () {
+                  enableAudio(false);
+                }),
+            MaterialButton(
+                minWidth: 200,
+                child: Text('enable audio'),
+                color: Theme.of(context).primaryColor,
+                textColor: Colors.white,
+                onPressed: () {
+                  enableAudio(true);
+                }),
+            MaterialButton(
+              minWidth: 200,
+              child: Text('switch camera'),
+              color: Theme.of(context).primaryColor,
+              textColor: Colors.white,
+              onPressed: switchCamera,
+            ),
+            MaterialButton(
+              minWidth: 200,
+              child: Text('Mirror camera'),
+              color: Theme.of(context).primaryColor,
+              textColor: Colors.white,
+              onPressed: mirrorCamera,
+            ),
+            Visibility(
+              visible: !_videoCall,
+              child: MaterialButton(
+                minWidth: 200,
+                child: Text('Switch audio to LOUDSPEAKER'),
+                color: Theme.of(context).primaryColor,
+                textColor: Colors.white,
+                onPressed: () {
+                  switchAudioOutput(QBRTCAudioOutputTypes.LOUDSPEAKER);
+                },
+              ),
+            ),
+            Visibility(
+              visible: !_videoCall,
+              child: MaterialButton(
+                minWidth: 200,
+                child: Text('Switch audio to EARSPEAKER'),
+                color: Theme.of(context).primaryColor,
+                textColor: Colors.white,
+                onPressed: () {
+                  switchAudioOutput(QBRTCAudioOutputTypes.EARSPEAKER);
+                },
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.only(
+                  left: 20.0, right: 20.0, top: 20.0, bottom: 20.0),
+              height: 1,
+              width: double.maxFinite,
+              color: Colors.grey,
+            ),
+            Visibility(
+              visible: _videoCall,
+              child: OrientationBuilder(builder: (context, orientation) {
+                return Container(
+                  decoration: BoxDecoration(color: Colors.white),
+                  child: Row(
+                    children: <Widget>[
+                      Container(
+                        margin: EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 10.0),
+                        width: 160.0,
+                        height: 160.0,
+                        child: RTCVideoView(
+                          onVideoViewCreated: _onLocalVideoViewCreated,
+                        ),
+                        decoration: BoxDecoration(color: Colors.black54),
+                      ),
+                      Container(
+                        margin: EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 10.0),
+                        width: 160.0,
+                        height: 160.0,
+                        child: RTCVideoView(
+                          onVideoViewCreated: _onRemoteVideoViewCreated,
+                        ),
+                        decoration: BoxDecoration(color: Colors.black54),
+                      ),
+                    ],
+                  ),
+                );
+              }),
+            ),
+          ]))),
+        ));
   }
 
   void _onLocalVideoViewCreated(RTCVideoViewController controller) {
